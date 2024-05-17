@@ -1,30 +1,31 @@
 
-class bookPreview extends HTMLElement {
-  static get observedAttributes() {
-    return ["author", "image", "id", "title"];
+class bookPreview extends HTMLElement { //This is a declaration of a class that creates an object. Extending makes it a subclass of the HTML file.
+  static get observedAttributes() {//This fetches values when a property is accessed.
+    return ["author", "image", "id", "title"];//This array is the scope that will be observed for changes
   }
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: "open" });
+  constructor() { //initializes an object created with a class.
+    super(); //Calls the constructor of the parent class HTMLElement
+    this.attachShadow({ mode: "open" }); //creates an open shadow DOM, providing encapsulation and scoped styling for the element's internal content
   }
 
-  connectedCallback() {
+  connectedCallback() { //Ensures BookPreview is rendered when it is added to the DOM.
     this.render();
   }
-
+// If the new value is different from the old value, it calls the render method to update the element's content.
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue !== newValue) {
       this.render();
     }
   }
-
+//This ensures that the displayed content is always in sync with the element's state
   render() {
     const author = this.getAttribute("author");
     const image = this.getAttribute("image");
     const id = this.getAttribute("id");
     const title = this.getAttribute("title");
 
+//Thsi block Initializes a new <template> element, specifies the HTML and CSS for the component and ensures the component's shadow DOM is updated with the latest content.
     const template = document.createElement("template");
     template.innerHTML = `
       <style>
@@ -123,10 +124,11 @@ function renderBooks(books) {
   showMore(); //Calls this function to update the "Show more" button.
 }
 
-//Web Component class call
+//Web Component class call. It ensures that whenever <book-preview> elements are used in the HTML, instances of the BookPreview class will be created to manage those elements.
 customElements.define("book-preview", bookPreview);
 
 //Creates element to display the books on screen as a button with and image, title and author.
+//The purpose of this function is to create a new book-preview custom element and configure it with the provided attributes.
 function createBookElement({ author, id, image, title }) {
   const element = document.createElement("book-preview");
   element.setAttribute("author", author);
