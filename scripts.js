@@ -1,3 +1,29 @@
+
+class bookPreview extends HTMLElement {
+  static get observedAttributes() {
+    return ["author", "image", "id", "title"];
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue !== newValue) {
+      this.render();
+    }
+  }
+
+  
+}
+
+
+
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js"; //Fetches data from the data file.
 
 let page = 1; //This variable keeps track of the page number.
