@@ -106,7 +106,6 @@ class bookPreview extends HTMLElement {
 }
 
 
-
 import { books, authors, genres, BOOKS_PER_PAGE } from "./data.js"; //Fetches data from the data file.
 
 let page = 1; //This variable keeps track of the page number.
@@ -123,25 +122,18 @@ function renderBooks(books) {
   document.querySelector("[data-list-items]").appendChild(fragment);
   showMore(); //Calls this function to update the "Show more" button.
 }
+
+//Web Component class call
 customElements.define("book-preview", bookPreview);
 
 //Creates element to display the books on screen as a button with and image, title and author.
 function createBookElement({ author, id, image, title }) {
-  const element = document.createElement("button");
-  element.classList = "preview";
-  element.setAttribute("data-preview", id);
+  const element = document.createElement("book-preview");
+  element.setAttribute("author", author);
+  element.setAttribute("id", id);
+  element.setAttribute("image", image);
+  element.setAttribute("title", title);
 
-  element.innerHTML = `
-        <img
-            class="preview__image"
-            src="${image}"
-        />
-
-        <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
-        </div>
-    `;
 
   return element; //Return to provide the created element back to the caller for flexible use
 }
